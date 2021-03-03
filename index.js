@@ -24,7 +24,6 @@ function init() {
     // need a camera to look at things
     // calcaulate aspectRatio
     var aspectRatio = window.innerWidth / window.innerHeight;
-    var width = 20;
     
     // Camera needs to be global
     let camera = new THREE.PerspectiveCamera(45, aspectRatio, 1, 1000);
