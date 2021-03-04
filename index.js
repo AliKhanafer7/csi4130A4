@@ -7,7 +7,7 @@ function init() {
     // canvas = document.createElement( 'canvas' );
     // var context = canvas.getContext( 'webgl2' );
     // var renderer = new THREE.WebGLRenderer( { canvas: canvas, context: context } );
-    let renderer = new THREE.WebGLRenderer();
+    renderer = new THREE.WebGLRenderer();
     // set some state - here just clear color
     renderer.setClearColor(new THREE.Color(0x333333));
     renderer.setSize(window.innerWidth, window.innerHeight);
@@ -24,11 +24,11 @@ function init() {
     // need a camera to look at things
     // calcaulate aspectRatio
     var aspectRatio = window.innerWidth / window.innerHeight;
-    
+
     // Camera needs to be global
-    let camera = new THREE.PerspectiveCamera(45, aspectRatio, 1, 1000);
+    camera = new THREE.PerspectiveCamera(45, aspectRatio, 1, 1000);
     // position the camera back and point to the center of the scene
-    camera.position.z = 30;
+    camera.position.z = 2000;
     camera.lookAt(scene.position);
 
     // render the scene
@@ -39,14 +39,14 @@ function init() {
     function render() {
         // render using requestAnimationFrame - register function
         requestAnimationFrame(render);
-        renderer.render(scene, activeCamera);
+        renderer.render(scene, camera);
     }
 
 }
 
 function onResize() {
-    frontCamera.aspect = window.innerWidth / window.innerHeight;
-    frontCamera.updateProjectionMatrix();
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
     // If we use a canvas then we also have to worry of resizing it
     renderer.setSize(window.innerWidth, window.innerHeight);
 }
@@ -55,3 +55,16 @@ window.onload = init;
 
 // register our resize event function
 window.addEventListener('resize', onResize, true);
+
+document.addEventListener('keydown', handleKeyDown);
+
+function handleKeyDown(e) {
+    switch (e.code) {
+        case "ArrowUp":
+            camera.position.z -= 50;
+            break;
+        case "ArrowDown":
+            camera.position.z += 50;
+            break;
+    }
+}
