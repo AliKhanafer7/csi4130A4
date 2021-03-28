@@ -23,21 +23,19 @@ function init() {
     var loader = new THREE.GLTFLoader();
 
     // Load a glTF resource
-    loader.load('models/tropical-island/source/Sketchfab/Tropical_Sketchfab.gltf',
+    loader.load('models/tropical-island/source/Sketchfab/Tropical_Sketchfab_NoRoof.gltf',
         function ( gltf ) {
             island = gltf.scene.children[0];
-            island.scale.set(100,100,100);
             scene.add(gltf.scene);
         }
     );
-
 
 
    
     // All drawing will be organized in a scene graph
     var scene = new THREE.Scene();
     scene.background = new THREE.Color().setHSL( 0.6, 0, 1 );
-	scene.fog = new THREE.Fog( scene.background, 1, 5000 );
+	  scene.fog = new THREE.Fog( scene.background, 1, 5000 );
     // show axes at the origin
     var axes = new THREE.AxesHelper(10);
     scene.add(axes);
