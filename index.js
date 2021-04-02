@@ -13,15 +13,66 @@ function init() {
     renderer.setSize(window.innerWidth, window.innerHeight);
     container.appendChild(renderer.domElement);
     var aspectRatio = window.innerWidth / window.innerHeight;
-    camera = new THREE.PerspectiveCamera(45, aspectRatio, 1, 1000);
-    const controls = new THREE.OrbitControls(camera)
-    camera.position.set(0,20,50);
+    camera = new THREE.PerspectiveCamera(30, aspectRatio, 1, 3000);
+    // const controls = new THREE.OrbitControls(camera)
+    camera.position.set(0,20,6000);
 
-    controls.update()
+    // controls.update()
 
+
+    // All drawing will be organized in a scene graph
+    var scene = new THREE.Scene();
+    scene.background = new THREE.Color().setHex(0x326696);
+    scene.fog = new THREE.Fog( scene.background, 1, 5000 );
+    // show axes at the origin
+    var axes = new THREE.AxesHelper(10);
+    scene.add(axes);
+
+    geometry = new THREE.Geometry();
+
+    var texture = new THREE.TextureLoader().load('fluffy_cloud/textures/cloud10.png' );
+    texture.magFilter = THREE.LinearMipMapLinearFilter;
+    texture.minFilter = THREE.LinearMipMapLinearFilter;
+
+
+    var fog = new THREE.Fog( 0x4584b4, - 100, 3000 );
+
+    material = new THREE.ShaderMaterial( {
+
+      uniforms: {
+
+        "map": { type: "t", value: texture },
+        "fogColor" : { type: "c", value: fog.color },
+        "fogNear" : { type: "f", value: fog.near },
+        "fogFar" : { type: "f", value: fog.far },
+
+      },
+      vertexShader: document.getElementById( 'vs' ).textContent,
+      fragmentShader: document.getElementById( 'fs' ).textContent,
+      depthWrite: false,
+      depthTest: false,
+      transparent: true
+
+    } );
+
+    var plane = new THREE.Mesh( new THREE.PlaneGeometry( 64, 64 ) );
+
+    for ( var i = 0; i < 20000; i++ ) {
+
+      plane.position.x = Math.random() * 1000 - 500;
+      plane.position.y = - Math.random() * Math.random() * 200 - 15;
+      plane.position.z = i;
+      plane.rotation.z = Math.random() * Math.PI;
+      plane.scale.x = plane.scale.y = Math.random() * Math.random() * 1.5 + 0.5;
+
+      new THREE.GeometryUtils.merge(geometry, plane );
+
+    }
+
+    mesh = new THREE.Mesh( geometry, material );
+    scene.add( mesh );
 
     var loader = new THREE.GLTFLoader();
-
     // Load a glTF resource
     loader.load('models/tropical-island/source/Sketchfab/Tropical_Sketchfab_NoRoof.gltf',
         function ( gltf ) {
@@ -32,13 +83,6 @@ function init() {
 
 
    
-    // All drawing will be organized in a scene graph
-    var scene = new THREE.Scene();
-    scene.background = new THREE.Color().setHSL( 0.6, 0, 1 );
-	  scene.fog = new THREE.Fog( scene.background, 1, 5000 );
-    // show axes at the origin
-    var axes = new THREE.AxesHelper(10);
-    scene.add(axes);
 
     // need a camera to look at things
     // calcaulate aspectRatio
@@ -74,7 +118,7 @@ function init() {
     function render() {
         // render using requestAnimationFrame - register function
         requestAnimationFrame(render);
-        controls.update();
+        // controls.update();
         renderer.render(scene, camera);
     }
 
@@ -105,3 +149,15 @@ window.onload = init;
 // register our resize event function
 window.addEventListener('resize', onResize, true);
 
+document.addEventListener('keydown', handleKeyDown);
+
+function handleKeyDown(e) {
+    switch (e.code) {
+        case "ArrowUp":
+            camera.position.z -= 50;
+            break;
+        case "ArrowDown":
+            camera.position.z += 50;
+            break;
+    }
+}
