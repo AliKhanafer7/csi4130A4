@@ -10,24 +10,25 @@ function init() {
   container.appendChild(renderer.domElement);
   var aspectRatio = window.innerWidth / window.innerHeight;
   camera = new THREE.PerspectiveCamera(30, aspectRatio, 1, 3000);
+
   controls = new THREE.OrbitControls(camera)
-  camera.position.set(0, 20, 6000);
+  camera.position.set(0, 620, 8000);
   controls.update()
   
-  controls.keyPanSpeed = 35;
+  controls.keyPanSpeed = 45;
   projector = new THREE.Projector();
   raycaster = new THREE.Raycaster();
   mouse = new THREE.Vector2();
   window.addEventListener('click', onDocumentMouseDown, false);
 
-
   // All drawing will be organized in a scene graph
   scene = new THREE.Scene();
+
   scene.background = new THREE.Color().setHex(0x326696);
   scene.fog = new THREE.Fog(scene.background, 1, 5000);
   // show axes at the origin
   var axes = new THREE.AxesHelper(10);
-  // scene.add(axes);
+  scene.add(axes);
 
   geometry = new THREE.Geometry();
 
@@ -65,14 +66,14 @@ function init() {
     plane.position.z = i;
     plane.rotation.z = Math.random() * Math.PI;
     plane.scale.x = plane.scale.y = Math.random() * Math.random() * 1.5 + 0.5;
-
     new THREE.GeometryUtils.merge(geometry, plane);
 
   }
 
   mesh = new THREE.Mesh(geometry, material);
+  mesh.position.y = 600
   scene.add(mesh);
-
+  
   var loader = new THREE.GLTFLoader();
   // Load a glTF resource
   loader.load('models/tropical-island/source/Sketchfab/Tropical_Sketchfab_NoRoof.gltf',
@@ -90,7 +91,13 @@ function init() {
       net.translateZ(-0.7)
       gltf.scene.name = "net"
       scene.add(gltf.scene);
+    });
 
+  // Load a glTF resource
+  loader.load('models/tropical-island/source/Sketchfab/Tropical_Sketchfab_NoRoof.gltf',
+    function (gltf) {
+      island = gltf.scene.children[0];
+      scene.add(gltf.scene);
     }
   );
 
@@ -117,11 +124,15 @@ function init() {
 
     }
   );
-  // need a camera to look at things
-  // calcaulate aspectRatio
 
-  // Camera needs to be global
-  // position the camera back and point to the center of the scene
+  loader.load('models/cesna_airplane/scene.gltf', (gltf) => {
+    gltf.scene.position.z = 8000
+    gltf.scene.position.y = 600
+    gltf.scene.rotation.y = -Math.PI / 2
+    gltf.scene.name = "airplane"
+    scene.add(gltf.scene);
+  })
+
 
   const color = 0xFFFFFF;
   const intensity = 0.45;
@@ -152,14 +163,22 @@ function init() {
 
   function render() {
     requestAnimationFrame(render);
+    if (camera.position.z >= 2000) {
+      camera.position.z -= 10
+      // controls.position.z -= 10
+    }else{
+      camera.position.y > 3 ? camera.position.y -= 1 : camera.position.y -= 0
+      camera.position.z > 10 ? camera.position.z -= 3.197 : camera.position.z -= 0
+    }
+    if(scene.getObjectByName("airplane")){
+      scene.getObjectByName("airplane").position.z -= 10;http://127.0.0.1:8080/CSI4130/Labs/csi4130A4/
     renderer.render(scene, camera);
   }
-
+}
 }
 
-
-
 function onDocumentMouseDown(event) {
+  console.log("here");
   event.preventDefault();
   var mouseVector = new THREE.Vector3(
     (event.clientX / window.innerWidth) * 2 - 1,
@@ -181,8 +200,6 @@ function onDocumentMouseDown(event) {
         break;
       }
     }
-
-
   }
 }
 
