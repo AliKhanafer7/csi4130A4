@@ -14,12 +14,10 @@ function init() {
   container.appendChild(renderer.domElement);
   var aspectRatio = window.innerWidth / window.innerHeight;
   camera = new THREE.PerspectiveCamera(30, aspectRatio, 1, 3000);
-  // const controls = new THREE.OrbitControls(camera)
-  camera.position.set(0, 320, 6000);
+  const controls = new THREE.OrbitControls(camera)
+  camera.position.set(0, 620, 8000);
 
-  // controls.update()
-
-
+  controls.update()
   // All drawing will be organized in a scene graph
   var scene = new THREE.Scene();
   scene.background = new THREE.Color().setHex(0x326696);
@@ -70,7 +68,7 @@ function init() {
   }
 
   mesh = new THREE.Mesh(geometry, material);
-  mesh.position.y = 300
+  mesh.position.y = 600
   scene.add(mesh);
 
   var loader = new THREE.GLTFLoader();
@@ -83,8 +81,8 @@ function init() {
   );
 
   loader.load('models/cesna_airplane/scene.gltf', (gltf) => {
-    gltf.scene.position.z = 6000
-    gltf.scene.position.y = 320
+    gltf.scene.position.z = 8000
+    gltf.scene.position.y = 600
     gltf.scene.rotation.y = -Math.PI / 2
     gltf.scene.name = "airplane"
     scene.add(gltf.scene);
@@ -121,23 +119,20 @@ function init() {
 
   // render the scene
   renderer.render(scene, camera);
-
   render();
-
   function render() {
     // render using requestAnimationFrame - register function
     requestAnimationFrame(render);
-    if (camera.position.z >= 350) {
+    if (camera.position.z >= 2000) {
       camera.position.z -= 10
-
+      // controls.position.z -= 10
     }else{
       camera.position.y > 3 ? camera.position.y -= 1 : camera.position.y -= 0
-      camera.position.z > 10 ? camera.position.z -= 1.852108871 : camera.position.z -= 0
+      camera.position.z > 10 ? camera.position.z -= 3.197 : camera.position.z -= 0
     }
     if(scene.getObjectByName("airplane")){
       scene.getObjectByName("airplane").position.z -= 10;
     }
-    // controls.update();
     renderer.render(scene, camera);
   }
 
