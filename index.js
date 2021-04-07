@@ -12,7 +12,7 @@ function init() {
   camera = new THREE.PerspectiveCamera(30, aspectRatio, 1, 3000);
 
   controls = new THREE.OrbitControls(camera)
-  camera.position.set(0, 5, 60);
+  camera.position.set(0, 620, 8000);
   controls.update()
   
   controls.keyPanSpeed = 50;
@@ -195,17 +195,17 @@ function (gltf) {
 
   function render() {
     requestAnimationFrame(render);
-    // if (camera.position.z >= 2000) {
-    //   camera.position.z -= 10
-    //   // controls.position.z -= 10
-    // }else{
-    //   camera.position.y > 3 ? camera.position.y -= 1 : camera.position.y -= 0
-    //   camera.position.z > 10 ? camera.position.z -= 3.197 : camera.position.z -= 0
-    // }
-    // if(scene.getObjectByName("airplane")){
-    //   scene.getObjectByName("airplane").position.z -= 10;
-    // }
-    // controls.update();
+    if (camera.position.z >= 2000) {
+      camera.position.z -= 10
+      // controls.position.z -= 10
+    }else{
+      camera.position.y > 3 ? camera.position.y -= 1 : camera.position.y -= 0
+      camera.position.z > 10 ? camera.position.z -= 3.197 : camera.position.z -= 0
+    }
+    if(scene.getObjectByName("airplane")){
+      scene.getObjectByName("airplane").position.z -= 10;
+    }
+    controls.update();
     renderer.render(scene, camera);
   }
 }
