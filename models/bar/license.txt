@@ -1,0 +1,11 @@
+Model Information:
+* title:	The Bar at Manurii Boutique Hotel
+* source:	https://sketchfab.com/3d-models/the-bar-at-manurii-boutique-hotel-846cc7dc8531414d9615f13e3e311762
+* author:	Patric Lengacher (https://sketchfab.com/patric_ocean)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "The Bar at Manurii Boutique Hotel" (https://sketchfab.com/3d-models/the-bar-at-manurii-boutique-hotel-846cc7dc8531414d9615f13e3e311762) by Patric Lengacher (https://sketchfab.com/patric_ocean) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

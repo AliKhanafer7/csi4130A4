@@ -12,10 +12,10 @@ function init() {
   camera = new THREE.PerspectiveCamera(30, aspectRatio, 1, 3000);
 
   controls = new THREE.OrbitControls(camera)
-  camera.position.set(0, 620, 8000);
+  camera.position.set(0, 5, 60);
   controls.update()
   
-  controls.keyPanSpeed = 45;
+  controls.keyPanSpeed = 50;
   projector = new THREE.Projector();
   raycaster = new THREE.Raycaster();
   mouse = new THREE.Vector2();
@@ -89,6 +89,7 @@ function init() {
       net = gltf.scene.children[0];
       net.translateX(10)
       net.translateZ(-0.7)
+      net.scale.set(1.2,1.2,1.2)
       gltf.scene.name = "net"
       scene.add(gltf.scene);
     });
@@ -101,29 +102,60 @@ function init() {
     }
   );
 
-  loader.load('models/volleyball/scene.gltf',
-    function (gltf) {
-      ball = gltf.scene.children[0];
-      ball.scale.set(0.025, 0.025, 0.025)
-      ball.translateX(10)
-      ball.translateZ(-0.1)
-      gltf.scene.name = "ball"
-      scene.add(gltf.scene);
-    }
-  );
-
   loader.load('models/volleyball_player/scene.gltf',
     function (gltf) {
       player = gltf.scene.children[0];
-      player.scale.set(0.0025, 0.0025, 0.0025)
+      player.scale.set(0.0035, 0.0035, 0.0035)
       player.translateX(9.3)
-      player.translateZ(-0.85)
+      player.translateZ(-0.9)
       player.rotateZ(1.57)
       gltf.scene.userData.name = "player"
       scene.add(gltf.scene);
 
     }
   );
+
+  loader.load('models/volleyball_player2/scene.gltf',
+  function (gltf) {
+    player = gltf.scene.children[0];
+    player.scale.set(0.03, 0.03, 0.03)
+    player.translateX(10.5)
+    player.translateZ(-0.85)
+    player.rotateZ(-1.3)
+    gltf.scene.userData.name = "player2"
+    scene.add(gltf.scene);
+  }
+);
+
+loader.load('models/bar/scene.gltf',
+function (gltf) {
+  player = gltf.scene.children[0];
+  player.translateY(10)
+  player.translateX(4)
+  player.rotateZ(-1.6)
+  scene.add(gltf.scene);
+});
+
+loader.load('models/woman1/scene.gltf',
+function (gltf) {
+  player = gltf.scene.children[0];
+  player.translateY(9.4)
+  player.translateX(4)
+  player.translateZ(-0.97)
+  player.rotateZ(3.14)
+  player.scale.set(0.004, 0.004, 0.004)
+  scene.add(gltf.scene);
+});
+
+loader.load('models/bartender/scene.gltf',
+function (gltf) {
+  player = gltf.scene.children[0];
+  player.translateY(10.4)
+  player.translateX(4.20)
+  player.translateZ(-0.97)
+  player.scale.set(0.008, 0.008, 0.008)
+  scene.add(gltf.scene);
+});
 
   loader.load('models/cesna_airplane/scene.gltf', (gltf) => {
     gltf.scene.position.z = 8000
@@ -163,18 +195,19 @@ function init() {
 
   function render() {
     requestAnimationFrame(render);
-    if (camera.position.z >= 2000) {
-      camera.position.z -= 10
-      // controls.position.z -= 10
-    }else{
-      camera.position.y > 3 ? camera.position.y -= 1 : camera.position.y -= 0
-      camera.position.z > 10 ? camera.position.z -= 3.197 : camera.position.z -= 0
-    }
-    if(scene.getObjectByName("airplane")){
-      scene.getObjectByName("airplane").position.z -= 10;http://127.0.0.1:8080/CSI4130/Labs/csi4130A4/
+    // if (camera.position.z >= 2000) {
+    //   camera.position.z -= 10
+    //   // controls.position.z -= 10
+    // }else{
+    //   camera.position.y > 3 ? camera.position.y -= 1 : camera.position.y -= 0
+    //   camera.position.z > 10 ? camera.position.z -= 3.197 : camera.position.z -= 0
+    // }
+    // if(scene.getObjectByName("airplane")){
+    //   scene.getObjectByName("airplane").position.z -= 10;
+    // }
+    // controls.update();
     renderer.render(scene, camera);
   }
-}
 }
 
 function onDocumentMouseDown(event) {
@@ -192,10 +225,15 @@ function onDocumentMouseDown(event) {
   var intersects = raycaster.intersectObjects(scene.children, true);
   if (intersects.length > 0) {
     for (var i = 0; i < intersects.length; i++) {
-      console.log(intersects[i].object.parent.name)
+      console.log(intersects[i].object.parent)
       if (intersects[i].object.parent.name === "Player") {
         controls.target.set(9, 0.012, -0.13);
         camera.position.set(7,0,0);
+        controls.update();
+        break;
+      }else if (intersects[i].object.parent.name == "Bar"){
+        controls.target.set(5, 0, -12);
+        // camera.position.set(5,0,4);
         controls.update();
         break;
       }
