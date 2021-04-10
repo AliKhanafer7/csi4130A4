@@ -86,7 +86,7 @@ function init() {
   const audioLoader = new THREE.AudioLoader();
   audioLoader.load('sounds/calypso.mp3', function (buffer) {
     sound.setBuffer(buffer);
-    sound.setRefDistance(20);
+    sound.setRefDistance(10);
     sound.play();
   });
 
@@ -99,7 +99,7 @@ function init() {
       scene.add(gltf.scene);
       gltf.scene.children[21].add(sound);
 
-      document.querySelector('button').addEventListener('click', function() {
+      document.querySelector('button').addEventListener('click', function () {
         audioLoader.resume().then(() => {
           console.log('Playback resumed successfully');
         });
@@ -234,7 +234,6 @@ function init() {
 }
 
 function onDocumentMouseDown(event) {
-  console.log("here");
   event.preventDefault();
   var mouseVector = new THREE.Vector3(
     (event.clientX / window.innerWidth) * 2 - 1,
@@ -248,7 +247,6 @@ function onDocumentMouseDown(event) {
   var intersects = raycaster.intersectObjects(scene.children, true);
   if (intersects.length > 0) {
     for (var i = 0; i < intersects.length; i++) {
-      console.log(intersects[i].object.parent)
       if (intersects[i].object.parent.name === "Player") {
         controls.target.set(9, 0.012, -0.13);
         camera.position.set(7, 0, 0);
