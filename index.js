@@ -12,9 +12,9 @@ function init() {
   camera = new THREE.PerspectiveCamera(30, aspectRatio, 1, 3000);
 
   controls = new THREE.OrbitControls(camera)
-  camera.position.set(0, 620, 8000);
+  camera.position.set(0, 620, 10000);
   controls.update()
-  
+
   controls.keyPanSpeed = 50;
   projector = new THREE.Projector();
   raycaster = new THREE.Raycaster();
@@ -73,7 +73,23 @@ function init() {
   mesh = new THREE.Mesh(geometry, material);
   mesh.position.y = 600
   scene.add(mesh);
-  
+
+
+  // create an AudioListener and add it to the camera
+  const listener = new THREE.AudioListener();
+  camera.add(listener);
+
+  // create the PositionalAudio object (passing in the listener)
+  const sound = new THREE.PositionalAudio(listener);
+
+  // load a sound and set it as the PositionalAudio object's buffer
+  const audioLoader = new THREE.AudioLoader();
+  audioLoader.load('sounds/calypso.mp3', function (buffer) {
+    sound.setBuffer(buffer);
+    sound.setRefDistance(20);
+    sound.play();
+  });
+
   var loader = new THREE.GLTFLoader();
   // Load a glTF resource
   loader.load('models/tropical-island/source/Sketchfab/Tropical_Sketchfab_NoRoof.gltf',
@@ -81,89 +97,96 @@ function init() {
       island = gltf.scene.children[0];
       gltf.scene.name = "island"
       scene.add(gltf.scene);
+      gltf.scene.children[21].add(sound);
+
+      document.querySelector('button').addEventListener('click', function() {
+        audioLoader.resume().then(() => {
+          console.log('Playback resumed successfully');
+        });
+      });
     }
   );
 
-  loader.load('models/volleyball_net/scene.gltf',
-    function (gltf) {
-      net = gltf.scene.children[0];
-      net.translateX(10)
-      net.translateZ(-0.7)
-      net.scale.set(1.2,1.2,1.2)
-      gltf.scene.name = "net"
-      scene.add(gltf.scene);
-    });
+  // loader.load('models/volleyball_net/scene.gltf',
+  //   function (gltf) {
+  //     net = gltf.scene.children[0];
+  //     net.translateX(10)
+  //     net.translateZ(-0.7)
+  //     net.scale.set(1.2,1.2,1.2)
+  //     gltf.scene.name = "net"
+  //     scene.add(gltf.scene);
+  //   });
 
-  // Load a glTF resource
-  loader.load('models/tropical-island/source/Sketchfab/Tropical_Sketchfab_NoRoof.gltf',
-    function (gltf) {
-      island = gltf.scene.children[0];
-      scene.add(gltf.scene);
-    }
-  );
+  // // Load a glTF resource
+  // loader.load('models/tropical-island/source/Sketchfab/Tropical_Sketchfab_NoRoof.gltf',
+  //   function (gltf) {
+  //     island = gltf.scene.children[0];
+  //     scene.add(gltf.scene);
+  //   }
+  // );
 
-  loader.load('models/volleyball_player/scene.gltf',
-    function (gltf) {
-      player = gltf.scene.children[0];
-      player.scale.set(0.0035, 0.0035, 0.0035)
-      player.translateX(9.3)
-      player.translateZ(-0.9)
-      player.rotateZ(1.57)
-      gltf.scene.userData.name = "player"
-      scene.add(gltf.scene);
+  //   loader.load('models/volleyball_player/scene.gltf',
+  //     function (gltf) {
+  //       player = gltf.scene.children[0];
+  //       player.scale.set(0.0035, 0.0035, 0.0035)
+  //       player.translateX(9.3)
+  //       player.translateZ(-0.9)
+  //       player.rotateZ(1.57)
+  //       gltf.scene.userData.name = "player"
+  //       scene.add(gltf.scene);
 
-    }
-  );
+  //     }
+  //   );
 
-  loader.load('models/volleyball_player2/scene.gltf',
-  function (gltf) {
-    player = gltf.scene.children[0];
-    player.scale.set(0.03, 0.03, 0.03)
-    player.translateX(10.5)
-    player.translateZ(-0.85)
-    player.rotateZ(-1.3)
-    gltf.scene.userData.name = "player2"
-    scene.add(gltf.scene);
-  }
-);
+  //   loader.load('models/volleyball_player2/scene.gltf',
+  //   function (gltf) {
+  //     player = gltf.scene.children[0];
+  //     player.scale.set(0.03, 0.03, 0.03)
+  //     player.translateX(10.5)
+  //     player.translateZ(-0.85)
+  //     player.rotateZ(-1.3)
+  //     gltf.scene.userData.name = "player2"
+  //     scene.add(gltf.scene);
+  //   }
+  // );
 
-loader.load('models/bar/scene.gltf',
-function (gltf) {
-  player = gltf.scene.children[0];
-  player.translateY(10)
-  player.translateX(4)
-  player.rotateZ(-1.6)
-  scene.add(gltf.scene);
-});
+  // loader.load('models/bar/scene.gltf',
+  // function (gltf) {
+  //   player = gltf.scene.children[0];
+  //   player.translateY(10)
+  //   player.translateX(4)
+  //   player.rotateZ(-1.6)
+  //   scene.add(gltf.scene);
+  // });
 
-loader.load('models/woman1/scene.gltf',
-function (gltf) {
-  player = gltf.scene.children[0];
-  player.translateY(9.4)
-  player.translateX(4)
-  player.translateZ(-0.97)
-  player.rotateZ(3.14)
-  player.scale.set(0.004, 0.004, 0.004)
-  scene.add(gltf.scene);
-});
+  // loader.load('models/woman1/scene.gltf',
+  // function (gltf) {
+  //   player = gltf.scene.children[0];
+  //   player.translateY(9.4)
+  //   player.translateX(4)
+  //   player.translateZ(-0.97)
+  //   player.rotateZ(3.14)
+  //   player.scale.set(0.004, 0.004, 0.004)
+  //   scene.add(gltf.scene);
+  // });
 
-loader.load('models/bartender/scene.gltf',
-function (gltf) {
-  player = gltf.scene.children[0];
-  player.translateY(10.4)
-  player.translateX(4.20)
-  player.translateZ(-0.97)
-  player.scale.set(0.008, 0.008, 0.008)
-  scene.add(gltf.scene);
-});
+  // loader.load('models/bartender/scene.gltf',
+  // function (gltf) {
+  //   player = gltf.scene.children[0];
+  //   player.translateY(10.4)
+  //   player.translateX(4.20)
+  //   player.translateZ(-0.97)
+  //   player.scale.set(0.008, 0.008, 0.008)
+  //   scene.add(gltf.scene);
+  // });
 
-  loader.load('models/cesna_airplane/scene.gltf', (gltf) => {
-    gltf.scene.position.z = 8000
-    gltf.scene.position.y = 600
-    gltf.scene.rotation.y = -Math.PI / 2
-    gltf.scene.name = "airplane"
-    scene.add(gltf.scene);
-  })
+  //   loader.load('models/cesna_airplane/scene.gltf', (gltf) => {
+  //     gltf.scene.position.z = 8000
+  //     gltf.scene.position.y = 600
+  //     gltf.scene.rotation.y = -Math.PI / 2
+  //     gltf.scene.name = "airplane"
+  //     scene.add(gltf.scene);
+  //   })
 
 
   const color = 0xFFFFFF;
@@ -198,11 +221,11 @@ function (gltf) {
     if (camera.position.z >= 2000) {
       camera.position.z -= 10
       // controls.position.z -= 10
-    }else{
+    } else {
       camera.position.y > 3 ? camera.position.y -= 1 : camera.position.y -= 0
       camera.position.z > 10 ? camera.position.z -= 3.197 : camera.position.z -= 0
     }
-    if(scene.getObjectByName("airplane")){
+    if (scene.getObjectByName("airplane")) {
       scene.getObjectByName("airplane").position.z -= 10;
     }
     controls.update();
@@ -228,10 +251,10 @@ function onDocumentMouseDown(event) {
       console.log(intersects[i].object.parent)
       if (intersects[i].object.parent.name === "Player") {
         controls.target.set(9, 0.012, -0.13);
-        camera.position.set(7,0,0);
+        camera.position.set(7, 0, 0);
         controls.update();
         break;
-      }else if (intersects[i].object.parent.name == "Bar"){
+      } else if (intersects[i].object.parent.name == "Bar") {
         controls.target.set(5, 0, -12);
         // camera.position.set(5,0,4);
         controls.update();
