@@ -107,86 +107,86 @@ function init() {
     }
   );
 
-  // loader.load('models/volleyball_net/scene.gltf',
-  //   function (gltf) {
-  //     net = gltf.scene.children[0];
-  //     net.translateX(10)
-  //     net.translateZ(-0.7)
-  //     net.scale.set(1.2,1.2,1.2)
-  //     gltf.scene.name = "net"
-  //     scene.add(gltf.scene);
-  //   });
+  loader.load('models/volleyball_net/scene.gltf',
+    function (gltf) {
+      net = gltf.scene.children[0];
+      net.translateX(10)
+      net.translateZ(-0.7)
+      net.scale.set(1.2,1.2,1.2)
+      gltf.scene.name = "net"
+      scene.add(gltf.scene);
+    });
 
-  // // Load a glTF resource
-  // loader.load('models/tropical-island/source/Sketchfab/Tropical_Sketchfab_NoRoof.gltf',
-  //   function (gltf) {
-  //     island = gltf.scene.children[0];
-  //     scene.add(gltf.scene);
-  //   }
-  // );
+  // Load a glTF resource
+  loader.load('models/tropical-island/source/Sketchfab/Tropical_Sketchfab_NoRoof.gltf',
+    function (gltf) {
+      island = gltf.scene.children[0];
+      scene.add(gltf.scene);
+    }
+  );
 
-  //   loader.load('models/volleyball_player/scene.gltf',
-  //     function (gltf) {
-  //       player = gltf.scene.children[0];
-  //       player.scale.set(0.0035, 0.0035, 0.0035)
-  //       player.translateX(9.3)
-  //       player.translateZ(-0.9)
-  //       player.rotateZ(1.57)
-  //       gltf.scene.userData.name = "player"
-  //       scene.add(gltf.scene);
+    loader.load('models/volleyball_player/scene.gltf',
+      function (gltf) {
+        player = gltf.scene.children[0];
+        player.scale.set(0.0035, 0.0035, 0.0035)
+        player.translateX(9.3)
+        player.translateZ(-0.9)
+        player.rotateZ(1.57)
+        gltf.scene.userData.name = "player"
+        scene.add(gltf.scene);
 
-  //     }
-  //   );
+      }
+    );
 
-  //   loader.load('models/volleyball_player2/scene.gltf',
-  //   function (gltf) {
-  //     player = gltf.scene.children[0];
-  //     player.scale.set(0.03, 0.03, 0.03)
-  //     player.translateX(10.5)
-  //     player.translateZ(-0.85)
-  //     player.rotateZ(-1.3)
-  //     gltf.scene.userData.name = "player2"
-  //     scene.add(gltf.scene);
-  //   }
-  // );
+    loader.load('models/volleyball_player2/scene.gltf',
+    function (gltf) {
+      player = gltf.scene.children[0];
+      player.scale.set(0.03, 0.03, 0.03)
+      player.translateX(10.5)
+      player.translateZ(-0.85)
+      player.rotateZ(-1.3)
+      gltf.scene.userData.name = "player2"
+      scene.add(gltf.scene);
+    }
+  );
 
-  // loader.load('models/bar/scene.gltf',
-  // function (gltf) {
-  //   player = gltf.scene.children[0];
-  //   player.translateY(10)
-  //   player.translateX(4)
-  //   player.rotateZ(-1.6)
-  //   scene.add(gltf.scene);
-  // });
+  loader.load('models/bar/scene.gltf',
+  function (gltf) {
+    player = gltf.scene.children[0];
+    player.translateY(10)
+    player.translateX(4)
+    player.rotateZ(-1.6)
+    scene.add(gltf.scene);
+  });
 
-  // loader.load('models/woman1/scene.gltf',
-  // function (gltf) {
-  //   player = gltf.scene.children[0];
-  //   player.translateY(9.4)
-  //   player.translateX(4)
-  //   player.translateZ(-0.97)
-  //   player.rotateZ(3.14)
-  //   player.scale.set(0.004, 0.004, 0.004)
-  //   scene.add(gltf.scene);
-  // });
+  loader.load('models/woman1/scene.gltf',
+  function (gltf) {
+    player = gltf.scene.children[0];
+    player.translateY(9.4)
+    player.translateX(4)
+    player.translateZ(-0.97)
+    player.rotateZ(3.14)
+    player.scale.set(0.004, 0.004, 0.004)
+    scene.add(gltf.scene);
+  });
 
-  // loader.load('models/bartender/scene.gltf',
-  // function (gltf) {
-  //   player = gltf.scene.children[0];
-  //   player.translateY(10.4)
-  //   player.translateX(4.20)
-  //   player.translateZ(-0.97)
-  //   player.scale.set(0.008, 0.008, 0.008)
-  //   scene.add(gltf.scene);
-  // });
+  loader.load('models/bartender/scene.gltf',
+  function (gltf) {
+    player = gltf.scene.children[0];
+    player.translateY(10.4)
+    player.translateX(4.20)
+    player.translateZ(-0.97)
+    player.scale.set(0.008, 0.008, 0.008)
+    scene.add(gltf.scene);
+  });
 
-  //   loader.load('models/cesna_airplane/scene.gltf', (gltf) => {
-  //     gltf.scene.position.z = 8000
-  //     gltf.scene.position.y = 600
-  //     gltf.scene.rotation.y = -Math.PI / 2
-  //     gltf.scene.name = "airplane"
-  //     scene.add(gltf.scene);
-  //   })
+    loader.load('models/cesna_airplane/scene.gltf', (gltf) => {
+      gltf.scene.position.z = 8000
+      gltf.scene.position.y = 600
+      gltf.scene.rotation.y = -Math.PI / 2
+      gltf.scene.name = "airplane"
+      scene.add(gltf.scene);
+    })
 
 
   const color = 0xFFFFFF;
